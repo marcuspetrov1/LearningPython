@@ -1,4 +1,5 @@
 #Macro Calculator
+import pandas as geopandas
 
 def welcomePrompt():
     print('\n\nHello! This is an online beginner project made by Marcus that \ncalculates your caloric intake based on your needs, all catered to you! \nTo begin, we need some information from you to start:\n\n')
@@ -56,23 +57,6 @@ def setTDEE(BMR, activity):
             return TDEE
         case _:
             print("Please enter a valid number.")
-            
-        
-    # if activity == 1:
-    #     TDEE = BMR * 1.2 
-    #     return TDEE
-    # if activity == 2:
-    #     TDEE = BMR * 1.375
-    #     return TDEE
-    # if activity == 3:
-    #     TDEE = BMR * 1.55
-    #     return TDEE
-    # if activity == 4:
-    #     TDEE = BMR * 1.725
-    #     return TDEE
-    # if activity == 5:
-    #     TDEE = BMR * 1.9
-    #     return TDEE 
 
 def getGoals(maintanenceCalories):
     goalChoice = input("\n\nIs your weight goal to: \n(1)cut weight \n(2)maintain weight \n(3)increase weight? ") 
