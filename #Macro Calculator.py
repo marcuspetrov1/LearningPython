@@ -38,21 +38,41 @@ def setBMR(weight, height, age, gender):
     # return maintCal
 
 def setTDEE(BMR, activity):
-    if activity == 1:
-        TDEE = BMR * 1.2 
-        return TDEE
-    if activity == 2:
-        TDEE = BMR * 1.375
-        return TDEE
-    if activity == 3:
-        TDEE = BMR * 1.55
-        return TDEE
-    if activity == 4:
-        TDEE = BMR * 1.725
-        return TDEE
-    if activity == 5:
-        TDEE = BMR * 1.9
-        return TDEE 
+    match activity:
+        case 1:
+            TDEE = BMR * 1.2
+            return TDEE
+        case 2:
+            TDEE = BMR * 1.375
+            return TDEE
+        case 3:
+            TDEE = BMR * 1.55
+            return TDEE
+        case 4:
+            TDEE = BMR * 1.725
+            return TDEE
+        case 5:
+            TDEE = BMR * 1.9
+            return TDEE
+        case _:
+            print("Please enter a valid number.")
+            
+        
+    # if activity == 1:
+    #     TDEE = BMR * 1.2 
+    #     return TDEE
+    # if activity == 2:
+    #     TDEE = BMR * 1.375
+    #     return TDEE
+    # if activity == 3:
+    #     TDEE = BMR * 1.55
+    #     return TDEE
+    # if activity == 4:
+    #     TDEE = BMR * 1.725
+    #     return TDEE
+    # if activity == 5:
+    #     TDEE = BMR * 1.9
+    #     return TDEE 
 
 def getGoals(maintanenceCalories):
     goalChoice = input("\n\nIs your weight goal to: \n(1)cut weight \n(2)maintain weight \n(3)increase weight? ") 
