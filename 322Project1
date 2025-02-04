@@ -1,0 +1,103 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_PROCESSES 100
+
+// Structure for a linked list node (child process)
+typedef struct ChildNode {
+    int pcb_index;
+    struct ChildNode *next;
+} ChildNode;
+
+// Process Control Block (PCB) structure
+typedef struct {
+    int parent;
+    ChildNode *children;
+} PCB;
+
+// Process table (array of PCBs)
+PCB process_table[MAX_PROCESSES];
+
+// Function to initialize the process table
+void initialize_process_table() {
+    for (int i = 0; i < MAX_PROCESSES; i++) {
+        process_table[i].parent = -1; // -1 indicates an unused PCB slot
+        process_table[i].children = NULL;
+    }
+}
+
+// Function to find an available PCB slot
+int find_available_pcb() {
+    for (int i = 0; i < MAX_PROCESSES; i++) {
+        if (process_table[i].parent == -1) {
+            return i;
+        }
+    }
+    return -1; // No available slot
+}
+
+// Function to create a child process
+void create_child(int parent_index) {
+    int child_index = find_available_pcb();
+    if (child_index == -1) {
+        printf("No available PCB slots for new process.\n");
+        return;
+    }
+
+    // Allocate new PCB and initialize it
+    process_table[child_index].parent = parent_index;
+    process_table[child_index].children = NULL;
+
+    // Create a new child node and append to parent's child list
+    ChildNode *new_child = (ChildNode *)malloc(sizeof(ChildNode));
+    if (!new_child) {
+        printf("Memory allocation failed.\n");
+        return;
+    }
+    new_child->pcb_index = child_index;
+    new_child->next = process_table[parent_index].children;
+    process_table[parent_index].children = new_child;
+
+    printf("Process %d created as a child of process %d.\n", child_index, parent_index);
+}
+
+// Function to recursively destroy descendants
+void destroy_descendants(int parent_index) {
+    ChildNode *current = process_table[parent_index].children;
+    while (current != NULL) {
+        int child_index = current->pcb_index;
+        destroy_descendants(child_index); // Recursively destroy all descendants
+        
+        // Free child PCB
+        process_table[child_index].parent = -1;
+        free(process_table[child_index].children);
+        process_table[child_index].children = NULL;
+
+        // Move to the next child and free current node
+        ChildNode *temp = current;
+        current = current->next;
+        free(temp);
+    }
+    
+    // Set parent's children list to NULL after all descendants are removed
+    process_table[parent_index].children = NULL;
+    printf("All descendants of process %d destroyed.\n", parent_index);
+}
+
+// Main function for testing
+int main() {
+    initialize_process_table();
+    
+    // Create an initial parent process (process 0)
+    process_table[0].parent = 0; // Root process
+    
+    create_child(0); // Create child of process 0
+    create_child(0); // Create another child of process 0
+    create_child(1); // Create child of process 1
+    create_child(2); // Create child of process 2
+    
+    // Destroy all descendants of process 0
+    destroy_descendants(0);
+    
+    return 0;
+}
