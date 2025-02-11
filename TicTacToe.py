@@ -54,14 +54,6 @@ while(true):
     printBoard()
 
         
-
-
-    
-
-#Main function
-# while(true):
-#     printBoard(board)
-    
     
 
 

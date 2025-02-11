@@ -72,7 +72,7 @@ def getGoals(maintanenceCalories):
             getGoals()
 
 def toCut(maintanenceCalories):
-    pass
+    
 
 def toMaintain(maintanenceCalories):
     pass
