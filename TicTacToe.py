@@ -11,33 +11,32 @@ def printBoard(array):
         print(board[i])
         print("---------------")
 
-printBoard(board)
 
 def makeSelection(player):
-    playerChoice = int(input("What is your move?"))
+    playerChoice = int(input(player + ", What is your move?"))
     
     #finding the index on the board of playersChoice 
     row = (playerChoice - 1) // 3
     col = (playerChoice - 1) % 3
-    checkSpace(player)
-    # if(boardSelection[row][col] == " "):
-    #     if(playerOne):
-    #         boardSelection[row][col] = "X"
-    #     else:
-    #         boardSelection[row][col] = "O"
-    # else:
-    #     print("Thats an occupied square! Pick another!")
-    #     makeSelection(player)
-
-def checkSpace(player):
-    if(boardSelection[row][col] == " "):
-        if(playerOne):
-            boardSelection[row][col] = "X"
-        else:
-            boardSelection[row][col] = "O"
+    #checkSpace(player)
+    if(board[row][col] == "-"):
+        if(player == playerOne):
+            board[row][col] = "X"
+        elif(player == playerTwo):
+            board[row][col] = "O"
     else:
         print("Thats an occupied square! Pick another!")
         makeSelection(player)
+
+# def checkSpace(player):
+#     if(board[row][col] == "-"):
+#         if(player == playerOne):
+#             board[row][col] = "X"
+#         elif(player == playerTwo):
+#             board[row][col] = "O"
+#     else:
+#         print("Thats an occupied square! Pick another!")
+#         makeSelection(player)
     
 
 #Gives each space on grid a value for user input 
@@ -48,10 +47,27 @@ def defineSpace(array):
             board[i][j] = boardSpot
             boardSpot = boardSpot + 1
 
-boardSelection = defineSpace(board)
+#boardSelection = defineSpace(board)
 
-while(true):
-    printBoard()
+def checkWinner(board):
+    if((board[i][0] and board[i][1] and board [i][2]) == 'X' or 'O'):
+        print("Player wins!")
+
+
+while(True):
+    playerOne = "Bill"
+    playerTwo = "Bob"
+    
+    makeSelection(playerOne)
+    printBoard(board)
+    makeSelection(playerTwo)
+    printBoard(board)
+    checkWinner(board)
+
+
+
+#printBoard(defineSpace(board))
+    
 
         
     
