@@ -17,7 +17,13 @@ class TicTacToe:
             print(self.board[i])
             print("---------------")
 
-    def checkSpace(self, row, col, player):    
+    def makeSelection(self, player):
+        playerChoice = int(input(player + ", What is your move?" ))
+        
+        #finding the index on the board of playersChoice 
+        row = (playerChoice - 1) // 3
+        col = (playerChoice - 1) % 3
+        def checkSpace(row, col, player):    
             if(self.board[row][col] == "-"):
                 if(player == self.playerOne):
                     self.board[row][col] = "X"
@@ -26,25 +32,21 @@ class TicTacToe:
             else:
                 print("Thats an occupied square! Pick another!")
                 self.makeSelection(player)
-
-    def makeSelection(self, player):
-        playerChoice = int(input(player + ", What is your move?" ))
         
-        #finding the index on the board of playersChoice 
-        row = (playerChoice - 1) // 3
-        col = (playerChoice - 1) % 3
-    
-        self.checkSpace(row, col, player)
+        checkSpace(row, col, player)
 
     #Gives each space on grid a value for user input 
     def defineSpace(self):
+        exampleBoard = [['-' for i in range(self.rowSize)] for i in range(self.columnSize)]
         boardSpot = 1
         for i in range(self.rowSize):
             for j in range(self.columnSize):
-                self.board[i][j] = boardSpot
+                exampleBoard[i][j] = boardSpot
                 boardSpot = boardSpot + 1
-
-    #boardSelection = defineSpace(board)
+        
+        for i in range(self.rowSize):
+            print(exampleBoard[i])
+            print("---------------")
 
     def checkWinner(self, player):
         #checks each row for a matching each 3 pair 
@@ -69,9 +71,11 @@ class TicTacToe:
         else: 
             return False
 
-#---MAIN----------------------------------------------------------------------------------
+#---------------------------------MAIN----------------------------------------------------------------------------------
 
-game = TicTacToe(3, "Bill", "Bob")
+game = TicTacToe(3, "Marcus", "Logan")
+print("Use this grid for your board selection")
+game.defineSpace()
 
 while(True):
     game.makeSelection(game.playerOne)
